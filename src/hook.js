@@ -136,6 +136,7 @@ async function main() {
     cacheCreateTokens: cacheCreate,
     cacheReadTokens: cacheRead,
     newLineCount: totalLines,
+    transcriptPath,
   });
 
   db.close();
