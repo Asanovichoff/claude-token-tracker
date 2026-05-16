@@ -16,7 +16,7 @@ No API keys. No network requests. No background server. Works completely offline
 ## Install
 
 ```bash
-git clone https://github.com/your-username/claude-token-tracker.git
+git clone https://github.com/Asanovichoff/claude-token-tracker.git
 cd claude-token-tracker
 ./install.sh
 ```
