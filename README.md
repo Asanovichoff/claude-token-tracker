@@ -54,14 +54,17 @@ claude-tokens --by-model --cost           # per-model spend totals
 After a session ends, you can see a per-turn token breakdown to debug why a session was expensive:
 
 ```bash
-# Get full session IDs for a project
+# List sessions for a project — the REPLAY column shows which ones support replay
+claude-tokens project ~/path/to/project
+
+# Get full session IDs as JSON (includes transcript_path so you can verify replay availability)
 claude-tokens project ~/path/to/project --json
 
 # Then replay any session
 claude-tokens replay <session-id>
 ```
 
-> **Note:** Replay requires a `transcript_path` recorded at session end. Sessions captured before installing this tool won't have it; all new sessions do.
+> **Note:** Replay requires a `transcript_path` recorded at session end. Sessions captured before installing this tool won't have it; all new sessions do. The `REPLAY` column in the project table shows `yes`/`no` at a glance.
 
 ---
 
@@ -104,6 +107,19 @@ claude-opus-4-7                     5     14.20M    98.0K    12.10M    $215.40
 claude-sonnet-4-6                  12      3.80M   312.0K     3.20M     $16.22
 ───────────────────────────────────────────────────────────────────────────────────
 TOTAL                                                                   $231.62
+```
+
+**Project view (`claude-tokens project ~/Desktop/devTool`)**
+
+```
+Project: ~/Desktop/devTool
+────────────────────────────────────────────────────────────────────────────────────
+DATE         SESSION          INPUT    OUTPUT  CACHE RD  MODEL                REPLAY
+────────────────────────────────────────────────────────────────────────────────────
+2026-05-16   efc4c0a5…      122.0K    14.0K   118.0K   claude-sonnet-4-6    yes
+2026-05-15   3ab7f12e…       88.5K     9.2K    84.1K   claude-sonnet-4-6    yes
+────────────────────────────────────────────────────────────────────────────────────
+TOTAL                        210.5K    23.2K
 ```
 
 **Session replay (`claude-tokens replay <id>`)**

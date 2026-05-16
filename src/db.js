@@ -101,7 +101,7 @@ export function queryByProject(db, projectPath) {
     SELECT session_id, date,
            input_tokens AS input, output_tokens AS output,
            cache_create_tokens AS cache_create, cache_read_tokens AS cache_read,
-           model, last_updated_at
+           model, transcript_path, last_updated_at
     FROM sessions WHERE project_path = ?
     ORDER BY last_updated_at DESC LIMIT 50
   `).all(projectPath);

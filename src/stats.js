@@ -234,7 +234,8 @@ export function showProject(projectPath, opts = {}) {
     return;
   }
 
-  const hr = opts.cost ? HR_W : HR;
+  // DATE(12) + SESSION(12) + INPUT(10) + OUTPUT(9) + CACHE_RD(9) + MODEL(20) + REPLAY(6) + spaces = 84, +cost(11) = 95
+  const hr = opts.cost ? '─'.repeat(95) : '─'.repeat(84);
   console.log(BOLD(`\nProject: ${shortPath(resolved)}`));
   console.log(hr);
 
@@ -245,7 +246,7 @@ export function showProject(projectPath, opts = {}) {
   }
 
   const costHdr = opts.cost ? ` ${'COST'.padStart(10)}` : '';
-  console.log(BOLD(`${'DATE'.padEnd(12)} ${'SESSION'.padEnd(12)} ${'INPUT'.padStart(10)} ${'OUTPUT'.padStart(9)} ${'CACHE RD'.padStart(9)} ${'MODEL'.padEnd(20)}${costHdr}`));
+  console.log(BOLD(`${'DATE'.padEnd(12)} ${'SESSION'.padEnd(12)} ${'INPUT'.padStart(10)} ${'OUTPUT'.padStart(9)} ${'CACHE RD'.padStart(9)} ${'MODEL'.padEnd(20)} ${'REPLAY'.padEnd(6)}${costHdr}`));
   console.log(hr);
 
   let tIn = 0, tOut = 0, tCost = 0;
@@ -256,13 +257,15 @@ export function showProject(projectPath, opts = {}) {
       tCost += c.total;
       costStr = ` ${col(fmtCost(c.total), 10, true)}`;
     }
+    const replayStr = r.transcript_path ? GRN('yes') : DIM('no');
     console.log(
       `${col(r.date, 12)} ` +
       `${col(r.session_id.slice(0, 8) + '…', 12)} ` +
       `${CYAN(col(fmt(r.input), 10, true))} ` +
       `${GRN(col(fmt(r.output), 9, true))} ` +
       `${col(fmt(r.cache_read), 9, true)} ` +
-      `${col(r.model ?? '—', 20)}${costStr}`,
+      `${col(r.model ?? '—', 20)} ` +
+      `${replayStr}${costStr}`,
     );
     tIn  += r.input  ?? 0;
     tOut += r.output ?? 0;
