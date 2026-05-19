@@ -1,0 +1,11 @@
+.git
+.gitignore
+src/
+webview/
+tsconfig.json
+esbuild.mjs
+out/
+*.map
+node_modules/
+!node_modules/better-sqlite3/
+!node_modules/better-sqlite3/**

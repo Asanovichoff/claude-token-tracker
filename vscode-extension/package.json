@@ -1,0 +1,100 @@
+{
+  "name": "claude-code-token-tracker",
+  "displayName": "Claude Code Token Tracker",
+  "description": "Real-time Claude Code token usage in your status bar and sidebar",
+  "version": "1.0.0",
+  "publisher": "claude-token-tracker",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "tokens",
+    "anthropic",
+    "ai",
+    "usage"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Asanovichoff/claude-token-tracker"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "claude-token-tracker",
+          "title": "Claude Token Tracker",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "claude-token-tracker": [
+        {
+          "type": "webview",
+          "id": "claudeTokenTracker.sidebar",
+          "name": "Token Usage"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "claudeTokenTracker.refresh",
+        "title": "Claude Token Tracker: Refresh"
+      },
+      {
+        "command": "claudeTokenTracker.openPanel",
+        "title": "Claude Token Tracker: Open Panel"
+      }
+    ],
+    "configuration": {
+      "title": "Claude Token Tracker",
+      "properties": {
+        "claudeTokenTracker.showCosts": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show estimated USD cost alongside token counts"
+        },
+        "claudeTokenTracker.statusBarFormat": {
+          "type": "string",
+          "enum": [
+            "tokens",
+            "cost",
+            "both"
+          ],
+          "default": "both",
+          "description": "What to show in the status bar item"
+        },
+        "claudeTokenTracker.pollIntervalMs": {
+          "type": "number",
+          "default": 2000,
+          "description": "How often to poll the transcript file for new tokens (ms)"
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.0.4",
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.94.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.6.0"
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "vscode:prepublish": "node esbuild.mjs",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  }
+}

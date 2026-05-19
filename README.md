@@ -2,6 +2,21 @@
 
 Automatically tracks Claude Code input/output token usage across all sessions and projects. Zero dependencies. One-command install.
 
+## Two ways to use it
+
+| | VSCode Extension | CLI |
+|---|---|---|
+| **Install** | Search "Claude Code Token Tracker" in Extensions | `./install.sh` |
+| **Live updates** | Status bar updates as Claude responds | — |
+| **History** | Sidebar panel (Today / Week / All-time) | `claude-tokens today/week/all` |
+| **Cost view** | Built-in | `--cost` flag |
+| **JSON output** | — | `--json` flag |
+| **Data** | Shared SQLite DB at `~/.claude/token-tracker/usage.db` | Same |
+
+Both tools share the same database — install one or both, your history stays in sync.
+
+→ **[VSCode Extension README](vscode-extension/README.md)**
+
 ## How it works
 
 Claude Code fires a `Stop` hook at the end of every turn. This tool registers a lightweight Node.js script as that hook. The script reads the session transcript (a JSONL file Claude Code maintains locally), extracts token counts from each API response, and stores them in a local SQLite database at `~/.claude/token-tracker/usage.db`.
